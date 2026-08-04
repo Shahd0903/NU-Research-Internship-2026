@@ -1,0 +1,17 @@
+# Requirements for Dudukcu2023_Preprocessing_Only notebook (NVAR / NG-RC project)
+# Python 3.9.6  (.venv)
+# Regenerate after changes:  .venv/bin/python -m pip freeze > requirements.txt
+
+# --- Notebook imports ---
+numpy==2.0.2
+pandas==2.3.3
+matplotlib==3.9.4
+scikit-learn==1.6.1
+tqdm==4.70.0
+wfdb==4.3.1
+
+# --- Modeling / hyperparameter search ---
+optuna==4.9.0
+
+# --- Jupyter kernel (needed to run the notebook in VS Code) ---
+ipykernel==6.31.0

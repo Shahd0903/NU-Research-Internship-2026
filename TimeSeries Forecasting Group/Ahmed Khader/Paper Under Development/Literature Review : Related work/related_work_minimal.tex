@@ -1,0 +1,218 @@
+% ============================================================================
+% Related Work  --  MINIMAL VERSION  (STANDALONE)
+%
+% COMPILE:  pdflatex related_work_minimal.tex     <-- run it TWICE
+%           No BibTeX, no wrapper, no .bib file needed, but you must run
+%           pdflatex TWO times: pass 1 writes the reference labels into the
+%           .aux file, pass 2 resolves the \cite commands. If you run it only
+%           once every citation shows as [?].
+%           In TeXShop: hit Typeset twice.
+%
+% This is the AUTHOR'S OWN draft text and structure, preserved. Changes made:
+%   1. Citation placeholders ('mention the paper about ...') filled in.
+%   2. ONE addition, agreed 2026-08-02: the paragraph on transformers in ECG
+%      being classification rather than forecasting  (marked  % >>> ADDED).
+%   3. Light grammatical cleanup only. No restructuring, no new sections.
+%
+% The fuller proposed restructure is in related_work_full.tex, awaiting review.
+%
+% Factual issues flagged but DELIBERATELY NOT changed, pending author decision;
+% each is marked  % >>> CHECK.
+%
+% TO MERGE INTO YOUR PAPER LATER: delete everything above \section{Related Work}
+% and everything from \begin{thebibliography} onward, then \input what remains.
+% ============================================================================
+
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+
+\title{Related Work draft}
+\author{}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% ============================ SECTION STARTS HERE ============================
+
+\section{Related Work}
+\label{sec:related}
+
+Chaos forecasting is a challenging field with multiple branches, each with its
+own models and data analysis. Consider the electrocardiogram (ECG), which has
+progressed a great deal since the early work on nonlinear cardiac
+prediction~\cite{babloyantz1988}, through the breakthrough brought by recurrent
+architectures such as the LSTM~\cite{yildirim2018}, to the deep convolutional
+and residual models that define current practice~\cite{hannun2019,ribeiro2020}.
+% >>> CHECK: 'babloyantz1988' is the earliest defensible nonlinear-ECG anchor,
+% >>> not a forecasting paper as such. If you want a true "first ECG
+% >>> forecasting paper", it needs to be identified; the lineage is murky.
+In parallel came the emergence of reservoir computing~\cite{jaeger2004}, which
+is used to enhance prediction at a much lower energy cost: next-generation
+variants train in milliseconds from only a few hundred
+samples~\cite{gauthier2021}, and in cardiac work specifically, echo state
+networks and their physics-informed hybrids forecast $15$--$20$ action
+potentials with action-potential-duration error below
+$5$~ms~\cite{shahi2021,shahi2022}. Most recently, transformer-based models have
+been applied to the ECG~\cite{xia2023,zhou2024}.
+
+% >>> ADDED (agreed 2026-08-02) ==============================================
+We investigated how transformer models have been used for the ECG. The work we
+found applies them to classification, principally hybrid
+convolutional--transformer classifiers for inter-patient arrhythmia
+recognition~\cite{xia2023,zhou2024}. So far, however, we have found no work that
+uses a transformer to forecast the future waveform, which leaves the field open
+to a novel contribution.
+% >>> END ADDED ==============================================================
+
+According to the literature the results are still limited, particularly over
+long horizons. One reason lies in the nature of the data itself, which is
+chaotic, and which therefore limits forecasting intrinsically.
+% >>> CHECK: whether the ECG is *low-dimensional deterministic chaos* is
+% >>> disputed (see Paper_to_be_published/README.md section 7). Your own
+% >>> surrogate tests fail on 3 of 6 records. Suggested safer wording:
+% >>> "...lies in the nature of the data itself, which is nonlinear,
+% >>> non-stationary and multiscale, and whose chaoticity remains debated."
+% >>> Left as you wrote it, pending your decision.
+
+\medskip
+
+We therefore turned to another domain, weather, and investigated it. Weather
+prediction rests on physical models, namely numerical weather prediction
+systems, of which general circulation models (GCMs) are the climate-scale
+counterpart. These models
+% >>> CHECK: operational *weather* forecasting is NWP (e.g. ECMWF IFS, in HRES
+% >>> and ENS configurations). GCM is the climate-modelling term. NeuralGCM is
+% >>> named for the GCM lineage because it also runs climate simulations.
+which integrate the governing equations directly but require enormous
+computational power~\cite{kochkov2024}. This motivated the field to ask whether
+machine learning could deliver comparable predictions at some trade-off, whether
+in exact pointwise values or in long-term behaviour. That is what we see in
+NeuralGCM~\cite{kochkov2024}, which forecasts for roughly one week at a quality
+comparable to the physical model, but far faster and at far lower energy cost.
+% >>> CHECK: NeuralGCM is evaluated to **15 days** for weather, and separately
+% >>> runs **40-year** climate simulations (22 of 37 initialisations stable for
+% >>> the full period). It also *beats* ECMWF-ENS on ensemble-mean RMSE and
+% >>> CRPS across nearly all variables and leads, rather than merely matching
+% >>> it. Throughput: 70,000 simulated days/day on one accelerator vs 19 days
+% >>> on 13,824 CPU cores. Left as you wrote it, pending your decision.
+Three-dimensional transformer models have also been used~\cite{bi2023}, but so
+far the prediction horizon remains on the order of one week.
+% >>> CHECK: true for Pangu-Weather specifically (evaluated to 7 days), but
+% >>> GraphCast reaches 10 days, ClimaX 14, GenCast 15. Either name Pangu
+% >>> explicitly or adjust the claim.
+
+\medskip
+
+\noindent\emph{[Remaining sections to be written.]}
+
+% ============================= SECTION ENDS HERE =============================
+
+% Embedded bibliography: no BibTeX required. If you later switch to BibTeX,
+% delete this block and use \bibliography{related_work} instead; the same
+% keys are defined in related_work.bib.
+\begin{thebibliography}{99}
+
+\bibitem{babloyantz1988}
+A.~Babloyantz and A.~Destexhe.
+\newblock Is the normal heart a periodic oscillator?
+\newblock {\em Biological Cybernetics}, 58(3):203--211, 1988.
+
+\bibitem{yildirim2018}
+{\"O}.~Y{\i}ld{\i}r{\i}m.
+\newblock A novel wavelet sequence based on deep bidirectional {LSTM} network
+  model for {ECG} signal classification.
+\newblock {\em Computers in Biology and Medicine}, 96:189--202, 2018.
+
+\bibitem{hannun2019}
+A.~Y. Hannun, P.~Rajpurkar, M.~Haghpanahi, et~al.
+\newblock Cardiologist-level arrhythmia detection and classification in
+  ambulatory electrocardiograms using a deep neural network.
+\newblock {\em Nature Medicine}, 25:65--69, 2019.
+
+\bibitem{ribeiro2020}
+A.~H. Ribeiro, M.~H. Ribeiro, G.~M.~M. Paix{\~a}o, et~al.
+\newblock Automatic diagnosis of the 12-lead {ECG} using a deep neural network.
+\newblock {\em Nature Communications}, 11:1760, 2020.
+
+\bibitem{jaeger2004}
+H.~Jaeger and H.~Haas.
+\newblock Harnessing nonlinearity: Predicting chaotic systems and saving energy
+  in wireless communication.
+\newblock {\em Science}, 304(5667):78--80, 2004.
+
+\bibitem{gauthier2021}
+D.~J. Gauthier, E.~Bollt, A.~Griffith, and W.~A.~S. Barbosa.
+\newblock Next generation reservoir computing.
+\newblock {\em Nature Communications}, 12:5564, 2021.
+
+\bibitem{shahi2021}
+S.~Shahi, C.~D. Marcotte, C.~J. Herndon, F.~H. Fenton, Y.~Shiferaw, and
+  E.~M. Cherry.
+\newblock Long-time prediction of arrhythmic cardiac action potentials using
+  recurrent neural networks and reservoir computing.
+\newblock {\em Frontiers in Physiology}, 12:734178, 2021.
+
+\bibitem{shahi2022}
+S.~Shahi, F.~H. Fenton, and E.~M. Cherry.
+\newblock Prediction of chaotic time series using recurrent neural networks and
+  reservoir computing techniques: A comparative study.
+\newblock {\em Machine Learning with Applications}, 8:100300, 2022.
+
+\bibitem{xia2023}
+Y.~Xia, Y.~Xiong, and K.~Wang.
+\newblock A transformer model blended with {CNN} and denoising autoencoder for
+  inter-patient {ECG} arrhythmia classification.
+\newblock {\em Biomedical Signal Processing and Control}, 86:105271, 2023.
+
+\bibitem{zhou2024}
+Y.~Zhou and X.~Wang.
+\newblock Heartbeat classification by combining multi-branch convolutional
+  neural networks and transformer.
+\newblock {\em iScience}, 27(3):109307, 2024.
+
+% [removed at author's request; restore if needed]
+% \bibitem{busia2024}
+% P.~Busia, M.~A. Scrugli, V.~J.~B. Jung, L.~Benini, and P.~Meloni.
+% \newblock A tiny transformer for low-power arrhythmia classification on
+%   microcontrollers.
+% \newblock {\em IEEE Transactions on Biomedical Circuits and Systems}, 2024.
+
+% [removed at author's request; restore if needed]
+% \bibitem{mckeen2025ecgfm}
+% K.~McKeen et~al.
+% \newblock {ECG-FM}: An open electrocardiogram foundation model.
+% \newblock {\em JAMIA Open}, 8(5), 2025.
+% \newblock [author list unverified; check before submission].
+
+% [uncited after the transformer paragraph was shortened; restore if needed]
+% \bibitem{fade2025}
+% N.~Rold{\'a}n et~al.
+% \newblock {FADE}: Forecasting for anomaly detection on {ECG}.
+% \newblock {\em Computer Methods and Programs in Biomedicine}, 267:108780, 2025.
+% \newblock [author list unverified; check before submission].
+
+% [uncited after the transformer paragraph was shortened; restore if needed]
+% \bibitem{zhang2025parroting}
+% Y.~Zhang and W.~Gilpin.
+% \newblock Context parroting: A simple but tough-to-beat baseline for foundation
+%   models in scientific machine learning.
+% \newblock arXiv:2505.11349, 2025. ICLR 2026.
+
+\bibitem{kochkov2024}
+D.~Kochkov, J.~Yuval, I.~Langmore, et~al.
+\newblock Neural general circulation models for weather and climate.
+\newblock {\em Nature}, 632(8027):1060--1066, 2024.
+
+\bibitem{bi2023}
+K.~Bi, L.~Xie, H.~Zhang, X.~Chen, X.~Gu, and Q.~Tian.
+\newblock Accurate medium-range global weather forecasting with {3D} neural
+  networks.
+\newblock {\em Nature}, 619:533--538, 2023.
+
+\end{thebibliography}
+
+\end{document}
