@@ -19,7 +19,7 @@ uv pip install -r requirements.txt          # deps
 ```
 
 Then open `Dudukcu2023_Preprocessing_Only (1).ipynb` in VS Code / Jupyter, select the `.venv` kernel,
-and **Run All**. (The MIT-BIH data folder must sit next to the notebook — it already does.)
+and **Run All**. (The MIT-BIH data folder must sit next to the notebook)
 
 ## Results (patient 103)
 
@@ -30,7 +30,6 @@ and **Run All**. (The MIT-BIH data folder must sit next to the notebook — it a
 | RMSE | **0.0054** | 0.0278 |
 | MAE  | 0.0040 | — |
 
-→ about **5× better** than the "repeat the last value" baseline.
 
 **Recursive multi-step forecasting**
 
